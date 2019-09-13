@@ -12,12 +12,14 @@ data "aws_iam_policy_document" "assume_role_doc" {
 
     dynamic "principals" {
       for_each = var.account_ids
-      iterator = account_ids
+      iterator = ids
 
-      type = "AWS"
-      identifiers = [
-        "arn:aws:iam::${account_ids.value}:root"
-      ]
+      content {
+        type = "AWS"
+        identifiers = [
+          "arn:aws:iam::${ids.value}:root"
+        ]
+      }
     }
   }
 }
