@@ -1,16 +1,17 @@
 provider "aws" {
   region  = "us-east-1"
-  profile = "default"
+  profile = "certreadrole-role"
+  alias   = "cert_read_role"
 }
 
 #-------------------------------------------------------------------------------
 # Configure the module.
 #-------------------------------------------------------------------------------
-module "role_site.example.com" {
+module "cert_role" {
   source = "../../"
 
   providers = {
-    aws = "aws"
+    aws = "aws.cert_read_role"
   }
 
   account_ids = [
