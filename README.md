@@ -2,57 +2,45 @@
 
 [![Build Status](https://travis-ci.com/cisagov/cert-read-role-tf-module.svg?branch=develop)](https://travis-ci.com/cisagov/cert-read-role-tf-module)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) [Terraform
-module](https://www.terraform.io/docs/modules/index.html) GitHub
-repository started.  This skeleton project contains [licensing
-information](LICENSE), as well as [pre-commit
-hooks](https://pre-commit.com) and a [Travis
-CI](https://travis-ci.com) configuration appropriate for the major
-languages that we use.
-
-See [here](https://www.terraform.io/docs/modules/index.html) for more
-details on Terraform modules and the standard module structure.
+A Terraform module for creating an IAM role for reading certificate
+data for a specified host.
 
 ## Usage ##
 
 ```hcl
-module "example" {
+module "role_site.example.com" {
   source = "github.com/cisagov/cert-read-role-tf-module"
 
-  aws_region            = "us-west-1"
-  aws_availability_zone = "b"
-  subnet_id             = "subnet-0123456789abcdef0"
-
-  tags = {
-    Key1 = "Value1"
-    Key2 = "Value2"
+  providers = {
+    aws = "aws"
   }
+
+  account_ids = [
+    "123456789012"
+  ]
+  cert_bucket_name = "cool-certificates"
+  hostname         = "site.example.com"
 }
 ```
 
 ## Examples ##
 
-* [Deploying into the default VPC](https://github.com/cisagov/cert-read-role-tf-module/tree/develop/examples/default_vpc)
+* [Basic usage](https://github.com/cisagov/cert-read-role-tf-module/tree/develop/examples/basic_usage)
 
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-| aws_region | The AWS region to deploy into (e.g. us-east-1) | string | | yes |
-| aws_availability_zone | The AWS availability zone to deploy into (e.g. a, b, c, etc.) | string | | yes |
-| subnet_id | The ID of the AWS subnet to deploy into (e.g. subnet-0123456789abcdef0) | string | | yes |
-| tags | Tags to apply to all AWS resources created | map(string) | `{}` | no |
+| account_ids | AWS account IDs that are to be allowed to assume the role | list(string) | [] | no |
+| cert_bucket_name | The name of the AWS S3 bucket where certificates are stored | string | | yes |
+| cert_path | The path to the certificates in the AWS S3 bucket.  For example, the certificate files for site.example.com are expected to live at <cert_bucket_path>/site.example.com/*. | string | "live" | no |
+| hostname | The FQDN corresponding to the certificate to be read (e.g. site.example.com) | string | | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| id | The EC2 instance ID |
 | arn | The EC2 instance ARN |
-| availability_zone | The AZ where the EC2 instance is deployed |
-| private_ip | The private IP of the EC2 instance |
-| subnet_id | The ID of the subnet where the EC2 instance is deployed |
 
 ## Contributing ##
 
