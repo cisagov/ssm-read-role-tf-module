@@ -23,6 +23,33 @@ module "role_site.example.com" {
 }
 ```
 
+You will also need a "meta-role" that you can assume for the purposes
+of creating the IAM role for reading host-specific certificate data.
+This meta-role requires a permission policy similar to the following:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetRole",
+                "iam:ListInstanceProfilesForRole",
+                "iam:DeleteRolePolicy",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:UpdateRole",
+                "iam:PutRolePolicy",
+                "iam:GetRolePolicy"
+            ],
+            "Resource": "arn:aws:iam::123456789012:role/ReadCert-*"
+        }
+    ]
+}
+```
+
 ## Examples ##
 
 * [Basic usage](https://github.com/cisagov/cert-read-role-tf-module/tree/develop/examples/basic_usage)
