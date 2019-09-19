@@ -15,7 +15,7 @@ all of which should be in this repository.
 
 If you want to report a bug or request a new feature, the most direct
 method is to [create an
-issue](https://github.com/cisagov/cert-read-role-tf-module/issues) in
+issue](https://github.com/cisagov/ssm-read-role-tf-module/issues) in
 this repository.  We recommend that you first search through existing
 issues (both open and closed) to check if your particular issue has
 already been reported.  If it has then you might want to add a comment
@@ -25,7 +25,7 @@ one.
 ## Pull requests ##
 
 If you choose to [submit a pull
-request](https://github.com/cisagov/cert-read-role-tf-module/pulls),
+request](https://github.com/cisagov/ssm-read-role-tf-module/pulls),
 you will notice that our continuous integration (CI) system runs a
 fairly extensive set of linters and syntax checkers.  Your pull
 request may fail these checks, and that's OK.  If you want you can
@@ -78,9 +78,9 @@ can create and configure the Python virtual environment with these
 commands:
 
 ```console
-cd cert-read-role-tf-module
-pyenv virtualenv <python_version_to_use> cert-read-role-tf-module
-pyenv local cert-read-role-tf-module
+cd ssm-read-role-tf-module
+pyenv virtualenv <python_version_to_use> ssm-read-role-tf-module
+pyenv local ssm-read-role-tf-module
 pip install -r requirements-dev.txt
 ```
 

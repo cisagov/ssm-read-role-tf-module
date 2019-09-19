@@ -1,15 +1,14 @@
-# cert-read-role-tf-module #
+# ssm-read-role-tf-module #
 
-[![Build Status](https://travis-ci.com/cisagov/cert-read-role-tf-module.svg?branch=develop)](https://travis-ci.com/cisagov/cert-read-role-tf-module)
+[![Build Status](https://travis-ci.com/cisagov/ssm-read-role-tf-module.svg?branch=develop)](https://travis-ci.com/cisagov/ssm-read-role-tf-module)
 
-A Terraform module for creating an IAM role for reading certificate
-data for a specified host.
+A Terraform module for creating an IAM role for reading SSM parameters.
 
 ## Usage ##
 
 ```hcl
 module "role_site.example.com" {
-  source = "github.com/cisagov/cert-read-role-tf-module"
+  source = "github.com/cisagov/ssm-read-role-tf-module"
 
   providers = {
     aws = "aws"
@@ -18,13 +17,13 @@ module "role_site.example.com" {
   account_ids = [
     "123456789012"
   ]
-  cert_bucket_name = "cool-certificates"
-  hostname         = "site.example.com"
+  ssm_names = ["/server/foo/secret.txt", "/server/foo/other_secret.txt"]
+  hostname = "site.example.com"
 }
 ```
 
 You will also need a "meta-role" that you can assume for the purposes
-of creating the IAM role for reading host-specific certificate data.
+of creating the IAM role for reading SSM parameter values.
 This meta-role requires a permission policy similar to the following:
 
 ```json
@@ -44,7 +43,7 @@ This meta-role requires a permission policy similar to the following:
                 "iam:PutRolePolicy",
                 "iam:GetRolePolicy"
             ],
-            "Resource": "arn:aws:iam::123456789012:role/ReadCert-*"
+            "Resource": "arn:aws:iam::123456789012:role/ReadSSM-*"
         }
     ]
 }
@@ -52,22 +51,22 @@ This meta-role requires a permission policy similar to the following:
 
 ## Examples ##
 
-* [Basic usage](https://github.com/cisagov/cert-read-role-tf-module/tree/develop/examples/basic_usage)
+* [Basic usage](https://github.com/cisagov/ssm-read-role-tf-module/tree/develop/examples/basic_usage)
 
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
 | account_ids | AWS account IDs that are to be allowed to assume the role | list(string) | [] | no |
-| cert_bucket_name | The name of the AWS S3 bucket where certificates are stored | string | | yes |
-| cert_path | The path to the certificates in the AWS S3 bucket.  For example, the certificate files for site.example.com are expected to live at <cert_bucket_path>/site.example.com/*. | string | "live" | no |
-| hostname | The FQDN corresponding to the certificate to be read (e.g. site.example.com) | string | | yes |
+| ssm_names | A list of SSM keys that the created role will be allowed to access. | list(string) | | yes |
+| ssm_regions | AWS regions of target SSMs | list(string) | `["*"]` | no |
+| hostname | The FQDN corresponding to the SSM parameters to be read (e.g. site.example.com) | string | | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| arn | The EC2 instance ARN |
+| arn | The ARN of the newly created role |
 
 ## Contributing ##
 
