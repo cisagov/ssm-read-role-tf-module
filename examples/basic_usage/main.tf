@@ -1,22 +1,26 @@
 provider "aws" {
-  region  = "us-east-1"
-  profile = "certreadrole-role"
-  alias   = "cert_read_role"
+  region = "us-east-1"
+  alias  = "ssm_read_role"
+  assume_role {
+    role_arn     = "arn:aws:iam::123456789011:role/CreateSSMReadRoles"
+    session_name = "terraform-example-create-ssm-role"
+  }
+
 }
+
 
 #-------------------------------------------------------------------------------
 # Configure the module.
 #-------------------------------------------------------------------------------
-module "cert_role" {
+module "ssm_role" {
   source = "../../"
 
   providers = {
-    aws = "aws.cert_read_role"
+    aws = "aws.ssm_read_role"
   }
 
-  account_ids = [
-    "563873274798"
-  ]
-  cert_bucket_name = "cool-certificates"
-  hostname         = "site.example.com"
+  account_ids = ["123456789012"]
+  hostname    = "site.example.com"
+  ssm_names   = ["server/openvpn/*", "server/openvpn-2/*"]
+  ssm_regions = ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
 }

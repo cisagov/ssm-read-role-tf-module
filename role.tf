@@ -26,30 +26,31 @@ data "aws_iam_policy_document" "assume_role_doc" {
 
 # The IAM role
 resource "aws_iam_role" "the_role" {
-  name               = "ReadCert-${var.hostname}"
-  description        = "Allows fetching the certificate data for ${var.hostname} from the ${var.cert_bucket_name} S3 bucket."
+  name               = "ReadSSM-${var.hostname}"
+  description        = "Allows reading SSM params for ${var.hostname}."
   assume_role_policy = data.aws_iam_policy_document.assume_role_doc.json
 }
 
-# IAM policy document that that allows for reading the certificate
-# information for a specific hostname from the S3 bucket where it is
-# stored.
-data "aws_iam_policy_document" "cert_doc" {
+# Get the current account
+data "aws_caller_identity" "current" {}
+
+# IAM policy document that that allows for reading the SSM parameters
+data "aws_iam_policy_document" "ssm_doc" {
   statement {
     effect = "Allow"
 
     actions = [
-      "s3:GetObject",
+      "ssm:GetParameters",
+      "ssm:GetParameter"
     ]
 
-    resources = [
-      "arn:aws:s3:::${var.cert_bucket_name}/${var.cert_path}/${var.hostname}/*",
-    ]
+    # calculate all the combinations of regions, accounts, and names
+    resources = [for t in setproduct(var.ssm_regions, [data.aws_caller_identity.current.account_id], var.ssm_names) : format("arn:aws:ssm:${t[0]}:${t[1]}:parameter/${t[2]}")]
   }
 }
 
-# The IAM policy for our cert-reading role
-resource "aws_iam_role_policy" "cert_policy" {
+# The IAM policy for our ssm-reading role
+resource "aws_iam_role_policy" "ssm_policy" {
   role   = aws_iam_role.the_role.id
-  policy = data.aws_iam_policy_document.cert_doc.json
+  policy = data.aws_iam_policy_document.ssm_doc.json
 }

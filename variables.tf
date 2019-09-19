@@ -4,13 +4,16 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
-variable "cert_bucket_name" {
-  description = "The name of the AWS S3 bucket where certificates are stored"
+variable "hostname" {
+  type        = string
+  description = "The FQDN corresponding to the host that will be reading the SSM params (e.g. site.example.com)"
 }
 
-variable "hostname" {
-  description = "The FQDN corresponding to the certificate to be read (e.g. site.example.com)"
+variable "ssm_names" {
+  type        = list(string)
+  description = "A list of SSM parameter names that the created role will be allowed to access."
 }
+
 
 # ------------------------------------------------------------------------------
 # Optional parameters
@@ -24,7 +27,8 @@ variable "account_ids" {
   default     = []
 }
 
-variable "cert_path" {
-  description = "The path to the certificates in the AWS S3 bucket.  For example, the certificate files for site.example.com are expected to live at <cert_bucket_path>/site.example.com/*."
-  default     = "live"
+variable "ssm_regions" {
+  type        = list(string)
+  description = "AWS regions of target SSMs"
+  default     = ["*"]
 }
