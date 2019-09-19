@@ -17,7 +17,7 @@ module "role_site.example.com" {
   account_ids = [
     "123456789012"
   ]
-  ssm_names = ["/server/foo/secret.txt", "/server/foo/other_secret.txt"]
+  ssm_names = ["/server/foo/secret.txt", "/common/*"]
   hostname = "site.example.com"
 }
 ```
