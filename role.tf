@@ -45,7 +45,7 @@ data "aws_iam_policy_document" "ssm_doc" {
     ]
 
     # calculate all the combinations of regions, accounts, and names
-    resources = [for t in setproduct(var.ssm_regions, [data.aws_caller_identity.current.account_id], var.ssm_names) : format("arn:aws:ssm:${t[0]}:${t[1]}:parameter/${t[2]}")]
+    resources = [for t in setproduct(var.ssm_regions, [data.aws_caller_identity.current.account_id], var.ssm_names) : format("arn:aws:ssm:${t[0]}:${t[1]}:parameter${t[2]}")]
   }
 }
 
