@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "assume_role_doc" {
 
 # The IAM role
 resource "aws_iam_role" "the_role" {
-  name               = "ReadSSM-${var.hostname}"
+  name               = "ParameterStoreReadOnly-${var.hostname}"
   description        = "Allows reading SSM params for ${var.hostname}."
   assume_role_policy = data.aws_iam_policy_document.assume_role_doc.json
 }
