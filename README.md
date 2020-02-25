@@ -1,6 +1,6 @@
 # ssm-read-role-tf-module #
 
-[![Build Status](https://travis-ci.com/cisagov/ssm-read-role-tf-module.svg?branch=develop)](https://travis-ci.com/cisagov/ssm-read-role-tf-module)
+[![GitHub Build Status](https://github.com/cisagov/ssm-read-role-tf-module/workflows/build/badge.svg)](https://github.com/cisagov/ssm-read-role-tf-module/actions)
 
 A Terraform module for creating an IAM role for reading SSM parameters.
 
@@ -43,7 +43,7 @@ This meta-role requires a permission policy similar to the following:
                 "iam:PutRolePolicy",
                 "iam:GetRolePolicy"
             ],
-            "Resource": "arn:aws:iam::123456789012:role/ReadSSM-*"
+            "Resource": "arn:aws:iam::123456789012:role/ParameterStoreReadOnly-*"
         }
     ]
 }
