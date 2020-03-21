@@ -11,7 +11,7 @@ variable "hostname" {
 
 variable "ssm_names" {
   type        = list(string)
-  description = "A list of SSM parameter names that the created role will be allowed to access."
+  description = "A list of SSM Parameter Store parameters that the created role will be allowed to access."
 }
 
 
