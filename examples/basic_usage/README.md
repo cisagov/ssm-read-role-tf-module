@@ -12,4 +12,4 @@ Note that this example may create resources which cost money. Run
 
 | Name | Description |
 |------|-------------|
-| role_arn | The ARN corresponding to the IAM role to be used for reading SSM parameters for the specified hostname |
+| role | The IAM role that can read the specified SSM Parameter Store parameters for site.example.com. |
