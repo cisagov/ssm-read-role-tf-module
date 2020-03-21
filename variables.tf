@@ -22,12 +22,12 @@ variable "user" {
 
 variable "account_ids" {
   type        = list(string)
-  description = "AWS account IDs that are to be allowed to assume the role"
+  description = "AWS account IDs that are allowed to assume the role."
   default     = []
 }
 
 variable "ssm_regions" {
   type        = list(string)
-  description = "AWS regions of target SSMs"
+  description = "AWS regions of target SSMs."
   default     = ["*"]
 }
