@@ -12,4 +12,5 @@ Note that this example may create resources which cost money. Run
 
 | Name | Description |
 |------|-------------|
+| policy | The IAM policy that can read the specified SSM Parameter Store parameters for site.example.com. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters for site.example.com. |
