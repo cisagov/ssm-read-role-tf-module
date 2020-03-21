@@ -2,7 +2,7 @@
 
 [![GitHub Build Status](https://github.com/cisagov/ssm-read-role-tf-module/workflows/build/badge.svg)](https://github.com/cisagov/ssm-read-role-tf-module/actions)
 
-A Terraform module for creating an IAM role for reading SSM parameters.
+A Terraform module for creating an IAM role and policy for reading SSM parameters.
 
 ## Usage ##
 
