@@ -4,16 +4,15 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
-variable "hostname" {
-  type        = string
-  description = "The FQDN corresponding to the host that will be reading the SSM params (e.g. site.example.com)"
-}
-
 variable "ssm_names" {
   type        = list(string)
   description = "A list of SSM Parameter Store parameters that the created role will be allowed to access."
 }
 
+variable "user" {
+  type        = string
+  description = "The name of the entity that the role is being created for (e.g. \"test-user\" or \"host.example.com\")."
+}
 
 # ------------------------------------------------------------------------------
 # Optional parameters

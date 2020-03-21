@@ -60,7 +60,7 @@ This meta-role requires a permission policy similar to the following:
 | account_ids | AWS account IDs that are to be allowed to assume the role | list(string) | [] | no |
 | ssm_names | A list of SSM Parameter Store parameters that the created role will be allowed to access. | list(string) | | yes |
 | ssm_regions | AWS regions of target SSMs | list(string) | `["*"]` | no |
-| hostname | The FQDN corresponding to the SSM parameters to be read (e.g. site.example.com) | string | | yes |
+| user | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | string | | yes |
 
 ## Outputs ##
 
