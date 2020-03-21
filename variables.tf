@@ -34,6 +34,6 @@ variable "iam_username" {
 
 variable "ssm_regions" {
   type        = list(string)
-  description = "AWS regions of target SSMs."
+  description = "AWS regions of target SSMs (e.g. [\"us-east-1\", \"us-east-2\"]).  If not provided, defaults to all regions."
   default     = ["*"]
 }
