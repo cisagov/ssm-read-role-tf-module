@@ -67,6 +67,7 @@ This meta-role requires a permission policy similar to the following:
 
 | Name | Description |
 |------|-------------|
+| policy | The IAM policy that can read the specified SSM Parameter Store parameters. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters. |
 
 ## Contributing ##
