@@ -58,6 +58,7 @@ This meta-role requires a permission policy similar to the following:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
 | account_ids | AWS account IDs that are allowed to assume the role. | list(string) | [] | no |
+| iam_username | The username of the IAM user allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s). | string | `root` | no |
 | ssm_names | A list of SSM Parameter Store parameters that the created role will be allowed to access. | list(string) | | yes |
 | ssm_regions | AWS regions of target SSMs. | list(string) | `["*"]` | no |
 | user | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | string | | yes |

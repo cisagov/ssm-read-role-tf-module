@@ -1,3 +1,8 @@
+locals {
+  # Properly format username for use in an ARN
+  iam_username = var.iam_username == "root" ? "root" : "user/${var.iam_username}"
+}
+
 # IAM assume role policy document for the IAM role
 data "aws_iam_policy_document" "assume_role_doc" {
   statement {
@@ -17,7 +22,7 @@ data "aws_iam_policy_document" "assume_role_doc" {
       content {
         type = "AWS"
         identifiers = [
-          "arn:aws:iam::${ids.value}:root"
+          "arn:aws:iam::${ids.value}:${local.iam_username}"
         ]
       }
     }

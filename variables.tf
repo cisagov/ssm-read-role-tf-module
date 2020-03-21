@@ -26,6 +26,12 @@ variable "account_ids" {
   default     = []
 }
 
+variable "iam_username" {
+  type        = string
+  description = "The username of the IAM user allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s)."
+  default     = "root"
+}
+
 variable "ssm_regions" {
   type        = list(string)
   description = "AWS regions of target SSMs."
