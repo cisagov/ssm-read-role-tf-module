@@ -16,7 +16,7 @@ module "ssm_role" {
   source = "../../"
 
   providers = {
-    aws = "aws.provision-ssm-read-roles"
+    aws = aws.provision-ssm-read-roles
   }
 
   account_ids = ["123456789012"]
