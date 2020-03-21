@@ -32,6 +32,16 @@ variable "iam_username" {
   default     = "root"
 }
 
+variable "role_description" {
+  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the user variable."
+  default     = "Allows read-only access to SSM Parameter Store parameters required for %s."
+}
+
+variable "role_name" {
+  description = "The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the user variable."
+  default     = "ParameterStoreReadOnly-%s"
+}
+
 variable "ssm_regions" {
   type        = list(string)
   description = "AWS regions of target SSMs (e.g. [\"us-east-1\", \"us-east-2\"]).  If not provided, defaults to all regions."

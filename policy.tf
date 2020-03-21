@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "ssm_doc" {
 
 # The IAM policy for our ssm-reading role
 resource "aws_iam_policy" "ssm_policy" {
-  description = "Allows read-only access to SSM Parameter Store parameters required for ${var.user}."
-  name        = "ParameterStoreReadOnly-${var.user}"
+  description = local.role_description
+  name        = local.role_name
   policy      = data.aws_iam_policy_document.ssm_doc.json
 }
