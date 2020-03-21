@@ -11,14 +11,12 @@ module "role_site.example.com" {
   source = "github.com/cisagov/ssm-read-role-tf-module"
 
   providers = {
-    aws = "aws"
+    aws = aws.provision-ssm-read-roles
   }
 
-  account_ids = [
-    "123456789012"
-  ]
+  account_ids = ["123456789012"]
   ssm_names = ["/server/foo/secret.txt", "/common/*"]
-  hostname = "site.example.com"
+  user = "site.example.com"
 }
 ```
 
@@ -31,19 +29,38 @@ This meta-role requires a permission policy similar to the following:
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
+            "Sid": "1",
             "Effect": "Allow",
             "Action": [
-                "iam:GetRole",
-                "iam:ListInstanceProfilesForRole",
-                "iam:DeleteRolePolicy",
+                "iam:AttachRolePolicy"
                 "iam:CreateRole",
                 "iam:DeleteRole",
-                "iam:UpdateRole",
+                "iam:DeleteRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListInstanceProfilesForRole",
                 "iam:PutRolePolicy",
-                "iam:GetRolePolicy"
+                "iam:TagRole",
+                "iam:UpdateAssumeRolePolicy",
+                "iam:UpdateRole",
             ],
             "Resource": "arn:aws:iam::123456789012:role/ParameterStoreReadOnly-*"
+        },
+        {
+            "Sid": "2",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreatePolicy"
+                "iam:CreatePolicyVersion",
+                "iam:DeletePolicy",
+                "iam:DeletePolicyVersion",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:ListPolicyVersions",
+            ],
+            "Resource": "arn:aws:iam::123456789012:policy/ParameterStoreReadOnly-*"
         }
     ]
 }
