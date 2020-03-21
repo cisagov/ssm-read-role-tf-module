@@ -66,7 +66,7 @@ This meta-role requires a permission policy similar to the following:
 
 | Name | Description |
 |------|-------------|
-| arn | The ARN of the newly created role |
+| role | The IAM role that can read the specified SSM Parameter Store parameters. |
 
 ## Contributing ##
 
