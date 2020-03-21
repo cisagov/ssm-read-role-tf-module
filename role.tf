@@ -30,32 +30,14 @@ data "aws_iam_policy_document" "assume_role_doc" {
 }
 
 # The IAM role
-resource "aws_iam_role" "the_role" {
+resource "aws_iam_role" "ssm_role" {
   name               = "ParameterStoreReadOnly-${var.user}"
   description        = "Allows read-only access to SSM Parameter Store parameters required for ${var.user}."
   assume_role_policy = data.aws_iam_policy_document.assume_role_doc.json
 }
 
-# Get the current account
-data "aws_caller_identity" "current" {}
-
-# IAM policy document that that allows for reading the SSM parameters
-data "aws_iam_policy_document" "ssm_doc" {
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "ssm:GetParameters",
-      "ssm:GetParameter"
-    ]
-
-    # calculate all the combinations of regions, accounts, and names
-    resources = [for t in setproduct(var.ssm_regions, [data.aws_caller_identity.current.account_id], var.ssm_names) : format("arn:aws:ssm:${t[0]}:${t[1]}:parameter${t[2]}")]
-  }
-}
-
-# The IAM policy for our ssm-reading role
-resource "aws_iam_role_policy" "ssm_policy" {
-  role   = aws_iam_role.the_role.id
-  policy = data.aws_iam_policy_document.ssm_doc.json
+# Attach the SSM policy to the role
+resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
+  policy_arn = aws_iam_policy.ssm_policy.arn
+  role       = aws_iam_role.ssm_role.name
 }
