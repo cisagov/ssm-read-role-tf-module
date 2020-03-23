@@ -1,6 +1,6 @@
 locals {
-  # Properly format username for use in an ARN
-  iam_username = var.iam_username == "root" ? "root" : "user/${var.iam_username}"
+  # Properly format usernames for use in an ARN
+  iam_usernames = contains(var.iam_usernames, "root") ? ["root"] : formatlist("user/%s", var.iam_usernames)
 
   # If var.role_description contains "%s", use format() to replace the "%s"
   # with var.entity_name, otherwise just use var.role_description as is

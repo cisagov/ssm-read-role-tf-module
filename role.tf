@@ -13,16 +13,10 @@ data "aws_iam_policy_document" "assume_role_doc" {
       identifiers = ["ec2.amazonaws.com"]
     }
 
-    dynamic "principals" {
-      for_each = var.account_ids
-      iterator = ids
-
-      content {
-        type = "AWS"
-        identifiers = [
-          "arn:aws:iam::${ids.value}:${local.iam_username}"
-        ]
-      }
+    # Calculate all combinations of account_ids and iam_usernames
+    principals {
+      type        = "AWS"
+      identifiers = [for t in setproduct(var.account_ids, local.iam_usernames) : format("arn:aws:iam::${t[0]}:${t[1]}")]
     }
   }
 }

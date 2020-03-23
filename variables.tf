@@ -26,10 +26,10 @@ variable "account_ids" {
   default     = []
 }
 
-variable "iam_username" {
-  type        = string
-  description = "The username of the IAM user allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s)."
-  default     = "root"
+variable "iam_usernames" {
+  type        = list(string)
+  description = "The list of IAM usernames allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s).  Note that including \"root\" in this list will override any other usernames in the list."
+  default     = ["root"]
 }
 
 variable "role_description" {
