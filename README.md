@@ -15,8 +15,8 @@ module "role_site.example.com" {
   }
 
   account_ids = ["123456789012"]
-  ssm_names = ["/server/foo/secret.txt", "/common/*"]
-  user = "site.example.com"
+  entity_name = "site.example.com"
+  ssm_names   = ["/server/foo/secret.txt", "/common/*"]
 }
 ```
 
@@ -75,12 +75,12 @@ This meta-role requires a permission policy similar to the following:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
 | account_ids | AWS account IDs that are allowed to assume the role. | list(string) | [] | no |
+| entity_name | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | string | | yes |
 | iam_username | The username of the IAM user allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s). | string | `root` | no |
 | role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the user variable. | string | `Allows read-only access to SSM Parameter Store parameters required for %s.` | no |
 | role_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the user variable. | string | `ParameterStoreReadOnly-%s` | no |
 | ssm_names | A list of SSM Parameter Store parameters that the created role will be allowed to access. | list(string) | | yes |
 | ssm_regions | AWS regions of target SSMs (e.g. ["us-east-1", "us-east-2"]).  If not provided, defaults to all regions. | list(string) | `["*"]` | no |
-| user | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | string | | yes |
 
 ## Outputs ##
 

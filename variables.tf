@@ -4,14 +4,14 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
+variable "entity_name" {
+  type        = string
+  description = "The name of the entity that the role is being created for (e.g. \"test-user\" or \"host.example.com\")."
+}
+
 variable "ssm_names" {
   type        = list(string)
   description = "A list of SSM Parameter Store parameters that the created role will be allowed to access."
-}
-
-variable "user" {
-  type        = string
-  description = "The name of the entity that the role is being created for (e.g. \"test-user\" or \"host.example.com\")."
 }
 
 # ------------------------------------------------------------------------------
@@ -33,12 +33,12 @@ variable "iam_username" {
 }
 
 variable "role_description" {
-  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the user variable."
+  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the entity_name variable."
   default     = "Allows read-only access to SSM Parameter Store parameters required for %s."
 }
 
 variable "role_name" {
-  description = "The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the user variable."
+  description = "The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the entity_name variable."
   default     = "ParameterStoreReadOnly-%s"
 }
 

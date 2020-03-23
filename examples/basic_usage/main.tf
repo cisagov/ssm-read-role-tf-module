@@ -20,7 +20,7 @@ module "ssm_role" {
   }
 
   account_ids = ["123456789012"]
+  entity_name = "site.example.com"
   ssm_names   = ["/server/openvpn/*", "/server/openvpn-2/*"]
   ssm_regions = ["us-east-1", "us-east-2", "us-west-1", "us-west-2"]
-  user        = "site.example.com"
 }
