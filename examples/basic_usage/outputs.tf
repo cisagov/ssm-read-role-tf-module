@@ -1,4 +1,9 @@
-output "role_arn" {
-  value       = module.ssm_role.arn
-  description = "The ARN corresponding to the IAM role to be used for reading SSM params for site.example.com"
+output "policy" {
+  value       = module.ssm_role.policy
+  description = "The IAM policy that can read the specified SSM Parameter Store parameters for site.example.com."
+}
+
+output "role" {
+  value       = module.ssm_role.role
+  description = "The IAM role that can read the specified SSM Parameter Store parameters for site.example.com."
 }

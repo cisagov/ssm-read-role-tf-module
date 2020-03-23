@@ -2,7 +2,7 @@
 
 [![GitHub Build Status](https://github.com/cisagov/ssm-read-role-tf-module/workflows/build/badge.svg)](https://github.com/cisagov/ssm-read-role-tf-module/actions)
 
-A Terraform module for creating an IAM role for reading SSM parameters.
+A Terraform module for creating an IAM role and policy for reading SSM parameters.
 
 ## Usage ##
 
@@ -11,14 +11,12 @@ module "role_site.example.com" {
   source = "github.com/cisagov/ssm-read-role-tf-module"
 
   providers = {
-    aws = "aws"
+    aws = aws.provision-ssm-read-roles
   }
 
-  account_ids = [
-    "123456789012"
-  ]
-  ssm_names = ["/server/foo/secret.txt", "/common/*"]
-  hostname = "site.example.com"
+  account_ids = ["123456789012"]
+  entity_name = "site.example.com"
+  ssm_names   = ["/server/foo/secret.txt", "/common/*"]
 }
 ```
 
@@ -31,19 +29,38 @@ This meta-role requires a permission policy similar to the following:
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
+            "Sid": "1",
             "Effect": "Allow",
             "Action": [
-                "iam:GetRole",
-                "iam:ListInstanceProfilesForRole",
-                "iam:DeleteRolePolicy",
+                "iam:AttachRolePolicy"
                 "iam:CreateRole",
                 "iam:DeleteRole",
-                "iam:UpdateRole",
+                "iam:DeleteRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:GetRole",
+                "iam:GetRolePolicy",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListInstanceProfilesForRole",
                 "iam:PutRolePolicy",
-                "iam:GetRolePolicy"
+                "iam:TagRole",
+                "iam:UpdateAssumeRolePolicy",
+                "iam:UpdateRole",
             ],
             "Resource": "arn:aws:iam::123456789012:role/ParameterStoreReadOnly-*"
+        },
+        {
+            "Sid": "2",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreatePolicy"
+                "iam:CreatePolicyVersion",
+                "iam:DeletePolicy",
+                "iam:DeletePolicyVersion",
+                "iam:GetPolicy",
+                "iam:GetPolicyVersion",
+                "iam:ListPolicyVersions",
+            ],
+            "Resource": "arn:aws:iam::123456789012:policy/ParameterStoreReadOnly-*"
         }
     ]
 }
@@ -57,16 +74,20 @@ This meta-role requires a permission policy similar to the following:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-------:|:--------:|
-| account_ids | AWS account IDs that are to be allowed to assume the role | list(string) | [] | no |
-| ssm_names | A list of SSM keys that the created role will be allowed to access. | list(string) | | yes |
-| ssm_regions | AWS regions of target SSMs | list(string) | `["*"]` | no |
-| hostname | The FQDN corresponding to the SSM parameters to be read (e.g. site.example.com) | string | | yes |
+| account_ids | AWS account IDs that are allowed to assume the role. | list(string) | [] | no |
+| entity_name | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | string | | yes |
+| iam_usernames | The list of IAM usernames allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s).    Note that including "root" in this list will override any other usernames in the list.| list(string) | `["root"]` | no |
+| role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the user variable. | string | `Allows read-only access to SSM Parameter Store parameters required for %s.` | no |
+| role_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the user variable. | string | `ParameterStoreReadOnly-%s` | no |
+| ssm_names | A list of SSM Parameter Store parameters that the created role will be allowed to access. | list(string) | | yes |
+| ssm_regions | AWS regions of target SSMs (e.g. ["us-east-1", "us-east-2"]).  If not provided, defaults to all regions. | list(string) | `["*"]` | no |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| arn | The ARN of the newly created role |
+| policy | The IAM policy that can read the specified SSM Parameter Store parameters. |
+| role | The IAM role that can read the specified SSM Parameter Store parameters. |
 
 ## Contributing ##
 

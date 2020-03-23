@@ -4,16 +4,15 @@
 # You must provide a value for each of these parameters.
 # ------------------------------------------------------------------------------
 
-variable "hostname" {
+variable "entity_name" {
   type        = string
-  description = "The FQDN corresponding to the host that will be reading the SSM params (e.g. site.example.com)"
+  description = "The name of the entity that the role is being created for (e.g. \"test-user\" or \"host.example.com\")."
 }
 
 variable "ssm_names" {
   type        = list(string)
-  description = "A list of SSM parameter names that the created role will be allowed to access."
+  description = "A list of SSM Parameter Store parameters that the created role will be allowed to access."
 }
-
 
 # ------------------------------------------------------------------------------
 # Optional parameters
@@ -23,12 +22,28 @@ variable "ssm_names" {
 
 variable "account_ids" {
   type        = list(string)
-  description = "AWS account IDs that are to be allowed to assume the role"
+  description = "AWS account IDs that are allowed to assume the role."
   default     = []
+}
+
+variable "iam_usernames" {
+  type        = list(string)
+  description = "The list of IAM usernames allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s).  Note that including \"root\" in this list will override any other usernames in the list."
+  default     = ["root"]
+}
+
+variable "role_description" {
+  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the entity_name variable."
+  default     = "Allows read-only access to SSM Parameter Store parameters required for %s."
+}
+
+variable "role_name" {
+  description = "The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the entity_name variable."
+  default     = "ParameterStoreReadOnly-%s"
 }
 
 variable "ssm_regions" {
   type        = list(string)
-  description = "AWS regions of target SSMs"
+  description = "AWS regions of target SSMs (e.g. [\"us-east-1\", \"us-east-2\"]).  If not provided, defaults to all regions."
   default     = ["*"]
 }
