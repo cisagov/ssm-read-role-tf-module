@@ -89,6 +89,12 @@ This meta-role requires a permission policy similar to the following:
 | policy | The IAM policy that can read the specified SSM Parameter Store parameters. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters. |
 
+## Notes ##
+
+Running `pre-commit` requires running `terraform init` in every directory that
+contains Terraform code. In this repository, these are the main directory and
+every directory under `examples/`.
+
 ## Contributing ##
 
 We welcome contributions!  Please see [here](CONTRIBUTING.md) for
