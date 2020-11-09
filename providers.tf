@@ -1,3 +1,3 @@
-# The "default" provider that is used to do everything
+# Default provider information.
 provider "aws" {
 }

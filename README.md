@@ -70,17 +70,30 @@ This meta-role requires a permission policy similar to the following:
 
 * [Basic usage](https://github.com/cisagov/ssm-read-role-tf-module/tree/develop/examples/basic_usage)
 
+## Requirements ##
+
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.12.0 |
+| aws | ~> 3.0 |
+
+## Providers ##
+
+| Name | Version |
+|------|---------|
+| aws | ~> 3.0 |
+
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-------:|:--------:|
-| account_ids | AWS account IDs that are allowed to assume the role. | list(string) | [] | no |
-| entity_name | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | string | | yes |
-| iam_usernames | The list of IAM usernames allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s).    Note that including "root" in this list will override any other usernames in the list.| list(string) | `["root"]` | no |
-| role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the user variable. | string | `Allows read-only access to SSM Parameter Store parameters required for %s.` | no |
-| role_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the user variable. | string | `ParameterStoreReadOnly-%s` | no |
-| ssm_names | A list of SSM Parameter Store parameters that the created role will be allowed to access. | list(string) | | yes |
-| ssm_regions | AWS regions of target SSMs (e.g. ["us-east-1", "us-east-2"]).  If not provided, defaults to all regions. | list(string) | `["*"]` | no |
+|------|-------------|------|---------|:--------:|
+| account_ids | AWS account IDs that are allowed to assume the role. | `list(string)` | `[]` | no |
+| entity_name | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | `string` | n/a | yes |
+| iam_usernames | The list of IAM usernames allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s).  Note that including "root" in this list will override any other usernames in the list. | `list(string)` | `["root"]` | no |
+| role_description | The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the entity_name variable. | `string` | `Allows read-only access to SSM Parameter Store parameters required for %s.` | no |
+| role_name | The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a "%s" in this value will get replaced with the entity_name variable. | `string` | `ParameterStoreReadOnly-%s` | no |
+| ssm_names | A list of SSM Parameter Store parameters that the created role will be allowed to access. | `list(string)` | n/a | yes |
+| ssm_regions | AWS regions of target SSMs (e.g. ["us-east-1", "us-east-2"]).  If not provided, defaults to all regions. | `list(string)` | `["*"]` | no |
 
 ## Outputs ##
 
@@ -89,9 +102,15 @@ This meta-role requires a permission policy similar to the following:
 | policy | The IAM policy that can read the specified SSM Parameter Store parameters. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters. |
 
+## Notes ##
+
+Running `pre-commit` requires running `terraform init` in every directory that
+contains Terraform code. In this repository, these are the main directory and
+every directory under `examples/`.
+
 ## Contributing ##
 
-We welcome contributions!  Please see [here](CONTRIBUTING.md) for
+We welcome contributions!  Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for
 details.
 
 ## License ##
