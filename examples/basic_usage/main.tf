@@ -1,13 +1,16 @@
 provider "aws" {
-  region = "us-east-1"
-  alias  = "provision-ssm-read-roles"
+  alias = "provision-ssm-read-roles"
   assume_role {
     role_arn     = "arn:aws:iam::123456789011:role/ProvisionParameterStoreReadRoles"
     session_name = "terraform-example-create-ssm-role"
   }
-
+  default_tags {
+    tags = {
+      Testing = true
+    }
+  }
+  region = "us-east-1"
 }
-
 
 #-------------------------------------------------------------------------------
 # Configure the module.
