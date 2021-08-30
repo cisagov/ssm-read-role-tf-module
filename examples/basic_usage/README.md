@@ -10,7 +10,9 @@ Note that this example may create resources which cost money. Run
 
 ## Requirements ##
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.13.0 |
 
 ## Providers ##
 
@@ -20,7 +22,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| ssm\_role | ../../ |  |
+| ssm\_role | ../../ | n/a |
 
 ## Resources ##
 
