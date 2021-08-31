@@ -16,7 +16,9 @@ Note that this example may create resources which cost money. Run
 
 ## Providers ##
 
-No providers.
+| Name | Version |
+|------|---------|
+| aws | ~> 3.38 |
 
 ## Modules ##
 
