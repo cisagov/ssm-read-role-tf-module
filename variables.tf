@@ -33,12 +33,12 @@ variable "iam_usernames" {
 }
 
 variable "role_description" {
-  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the entity_name variable."
+  description = "The description to associate with the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that the \"%s\" in this value will get replaced with the entity_name variable.  If there are no instances of \"%s\" present in this value, no replacement will be made and the value will be used as is.  Including more than one instance of \"%s\" in this value will result in a Terraform error, so don't do that."
   default     = "Allows read-only access to SSM Parameter Store parameters required for %s."
 }
 
 variable "role_name" {
-  description = "The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that a \"%s\" in this value will get replaced with the entity_name variable."
+  description = "The name to assign the IAM role (as well as the corresponding policy) that allows read-only access to the specified SSM Parameter Store parameters.  Note that the \"%s\" in this value will get replaced with the entity_name variable.  If there are no instances of \"%s\" present in this value, no replacement will be made and the value will be used as is.  Including more than one instance of \"%s\" in this value will result in a Terraform error, so don't do that.  If the role name is longer than the current AWS limit of 64 characters (either as-is or after entity_name replacement), the role name will be truncated to the first 64 characters."
   default     = "ParameterStoreReadOnly-%s"
 }
 
