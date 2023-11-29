@@ -70,18 +70,19 @@ This meta-role requires a permission policy similar to the following:
 
 - [Basic usage](https://github.com/cisagov/ssm-read-role-tf-module/tree/develop/examples/basic_usage)
 
+<!-- BEGIN_TF_DOCS -->
 ## Requirements ##
 
 | Name | Version |
 |------|---------|
 | terraform | ~> 1.0 |
-| aws | ~> 3.38 |
+| aws | ~> 4.9 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | ~> 3.38 |
+| aws | ~> 4.9 |
 
 ## Modules ##
 
@@ -116,6 +117,7 @@ No modules.
 |------|-------------|
 | policy | The IAM policy that can read the specified SSM Parameter Store parameters. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters. |
+<!-- END_TF_DOCS -->
 
 ## Notes ##
 
