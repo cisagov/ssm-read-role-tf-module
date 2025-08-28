@@ -8,7 +8,7 @@ A Terraform module for creating an IAM role and policy for reading SSM parameter
 
 ```hcl
 module "role_site.example.com" {
-  source = "github.com/cisagov/ssm-read-role-tf-module"
+  source = "github.com/cisagov/ssm-read-role-tf-module?ref=v1.0.0"
 
   providers = {
     aws = aws.provision-ssm-read-roles
