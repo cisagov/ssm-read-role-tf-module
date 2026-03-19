@@ -76,14 +76,14 @@ This meta-role requires a permission policy similar to the following:
 ## Requirements ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | terraform | >= 1.1 |
 | aws | >= 4.9 |
 
 ## Providers ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | aws | >= 4.9 |
 
 ## Modules ##
@@ -93,7 +93,7 @@ No modules.
 ## Resources ##
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_iam_policy.ssm_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.ssm_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.ssm_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
@@ -104,7 +104,7 @@ No modules.
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | account\_ids | AWS account IDs that are allowed to assume the role. | `list(string)` | `[]` | no |
 | entity\_name | The name of the entity that the role is being created for (e.g. "test-user" or "host.example.com"). | `string` | n/a | yes |
 | iam\_usernames | The list of IAM usernames allowed to assume the role.  If not provided, defaults to allowing any user in the specified account(s).  Note that including "root" in this list will override any other usernames in the list. | `list(string)` | ```[ "root" ]``` | no |
@@ -116,7 +116,7 @@ No modules.
 ## Outputs ##
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | policy | The IAM policy that can read the specified SSM Parameter Store parameters. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters. |
 <!-- END_TF_DOCS -->

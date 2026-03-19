@@ -12,7 +12,7 @@ Note that this example may create resources which cost money. Run
 ## Requirements ##
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | terraform | ~> 1.1 |
 | aws | ~> 6.7 |
 
@@ -23,7 +23,7 @@ No providers.
 ## Modules ##
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | ssm\_role | ../../ | n/a |
 
 ## Resources ##
@@ -37,7 +37,7 @@ No inputs.
 ## Outputs ##
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | policy | The IAM policy that can read the specified SSM Parameter Store parameters for site.example.com. |
 | role | The IAM role that can read the specified SSM Parameter Store parameters for site.example.com. |
 <!-- END_TF_DOCS -->
